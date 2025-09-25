@@ -311,7 +311,7 @@ def initiate_payment(request, transaction_id):
         'transaction': transaction,
         'cart_items': cart_items,
         'public_key': settings.FLUTTERWAVE_PUBLIC_KEY,
-        'redirect_url': 'https://www.godoneveryside.com/payment-callback',
+        'redirect_url': 'https://softboycrown.pythonanywhere.com/payment-callback',
         'customer': {
             'name': f"{request.user.first_name} {request.user.last_name}",
             'email': request.user.email,
@@ -1006,8 +1006,9 @@ def cart(request):
     return render(request, 'SoftBoyCrownApp/cart.html', context)
 
 
+
+
 def register(request):
-    categories = Category.objects.all()
     if request.user.is_authenticated:
         return redirect('home')
     else:
@@ -1023,27 +1024,60 @@ def register(request):
                 messages.error(request, 'Error creating account. Please check the form.')
         else:
             form = RegisterForm()
-    return render(request, 'SoftBoyCrownApp/register.html', {'form': form, 'categories': categories})
+    return render(request, 'SoftBoyCrownApp/register.html', {'form': form, })
+
+from django.contrib.auth import authenticate, login
+from django.http import JsonResponse
 
 
 def login_user(request):
-    categories = Category.objects.all()
     if request.user.is_authenticated:
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({
+                'status': 'success',
+                'message': 'Already logged in.',
+                'redirect_url': reverse('home')
+            })
         return redirect('home')
-    else:
-        error_message = None
-        if request.method == 'POST':
-            email = request.POST['email']
-            password = request.POST['password']
-            user = authenticate(request, email=email, password=password)
 
-            if user is not None:
-                login(request, user)
-                return redirect('home')
-            else:
-                messages.error(request, 'Invalid email or password.')
-        return render(request, 'SoftBoyCrownApp/login.html', {'error_message': error_message, 'categories': categories})
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user = authenticate(request, email=email, password=password)
 
+        if user is not None:
+            login(request, user)
+            # Update cart count for the response
+            cart_count = 0
+            if user.is_authenticated:
+                cart, created = Cart.objects.get_or_create(user=user)
+                cart_count = cart.items.count()
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'status': 'success',
+                    'message': 'Login successful!',
+                    'redirect_url': reverse('home'),
+                    'cart_count': cart_count
+                })
+            messages.success(request, 'Login successful!')
+            return redirect('home')
+        else:
+            error_message = 'Invalid email or password.'
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'status': 'error',
+                    'message': error_message,
+                    'errors': {'__all__': error_message}
+                }, status=400)
+            messages.error(request, error_message)
+    
+    # Calculate cart count for non-authenticated users (default to 0)
+    cart_count = 0
+    context = {
+        'error_message': None,  # Kept for backward compatibility, but using messages instead
+        'cart_count': cart_count
+    }
+    return render(request, 'SoftBoyCrownApp/login.html', context)
 
 
 # def password_reset_request(request):

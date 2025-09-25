@@ -244,46 +244,49 @@ COUNTRIES = [
     ('Zimbabwe', 'Zimbabwe'),
 ]
 
+
+
+
 class RegisterForm(UserCreationForm):
-    street      = forms.CharField(max_length=255, required=False)
-    city        = forms.CharField(max_length=100, required=False)
-    state       = forms.CharField(required=False, widget=forms.Select(attrs={'class': 'form-control'}))
-    postal_code = forms.CharField(max_length=20,  required=True)
-    country     = forms.ChoiceField(choices=COUNTRIES, required=False, widget=forms.Select(attrs={'class': 'form-control'}))
-    
+    street = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    city = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    state = forms.ChoiceField(choices=[('', 'Select state')] + list(NIGERIAN_STATES), required=False, widget=forms.Select(attrs={'class': 'form-select'}))
+    postal_code = forms.CharField(max_length=20, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    country = forms.ChoiceField(choices=[('', 'Select Country')] + list(COUNTRIES), required=False, widget=forms.Select(attrs={'class': 'form-control'}))
+    terms = forms.BooleanField(required=True, widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}))
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Set the choices for the state field
-        self.fields['state'].widget.choices = NIGERIAN_STATES
+        for field in ['first_name', 'last_name', 'username', 'email', 'phone_number', 'password1', 'password2']:
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
 
     class Meta:
-        model  = CustomUser
-        fields = [
-            'first_name','last_name','username','email','phone_number',
-            'password1','password2',
-            # address fields are declared above, so not listed here
-        ]
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'username', 'email', 'phone_number', 'password1', 'password2', 'street', 'city', 'state', 'postal_code', 'country']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if not cleaned_data.get('terms'):
+            self.add_error('terms', 'You must agree to the Terms of Service and Privacy Policy.')
+        return cleaned_data
 
     def save(self, commit=True):
-        # 1) save the user
-        user = super().save(commit=commit)
-
-        # 2) create and attach the address
-        addr_data = {
-          'street':      self.cleaned_data.get('street'),
-          'city':        self.cleaned_data.get('city'),
-          'state':       self.cleaned_data.get('state'),
-          'postal_code': self.cleaned_data.get('postal_code'),
-          'country':     self.cleaned_data.get('country'),
-          'phone_number':self.cleaned_data.get('phone_number'),
-        }
-        address = Address.objects.create(**addr_data)
-        user.address = address
+        user = super().save(commit=False)
         if commit:
             user.save()
-
+            addr_data = {
+                'street': self.cleaned_data.get('street'),
+                'city': self.cleaned_data.get('city'),
+                'state': self.cleaned_data.get('state'),
+                'postal_code': self.cleaned_data.get('postal_code'),
+                'country': self.cleaned_data.get('country'),
+                'phone_number': self.cleaned_data.get('phone_number'),
+            }
+            if any(addr_data.values()):
+                address = Address.objects.create(**addr_data)
+                user.address = address
+                user.save()
         return user
-
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = CustomUser
