@@ -142,7 +142,7 @@
           <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'lookbook' %}">Lookbook</a></li>
           <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'our_story' %}">About</a></li>
           <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'contact' %}">Contact</a></li>
-          <li class="nav-item"><a class="nav-link cart-icon" href="{% url 'cart' %}"><i class="bi bi-cart3 fs-5"></i><span class="cart-count">0</span></a></li>
+          <li class="nav-item"><a class="nav-link cart-icon" href="{% url 'cart' %}"><i class="bi bi-cart3 fs-5"></i><span class="cart-count">{{ cart_count }}</span></a></li>
           <li class="nav-item"><a class="nav-link text-white" href="{% url 'profile' %}"><i class="bi bi-person-circle fs-5"></i></a></li>
           <li class="nav-item ms-lg-2"><a class="btn nav-cta" href="{% url 'shop' %}">Shop Now</a></li>
         </ul>
