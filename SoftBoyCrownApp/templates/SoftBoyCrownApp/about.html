@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About Us — SOFT BOY CROWN</title>
+  <meta name="description" content="Our story, mission and vision. Born from a generation redefining strength through softness." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&family=Bebas+Neue&family=Gloock&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    :root{
+      --bg:#0b0b0b;          /* deep noir */
+      --card:#121212;        /* card surface */
+      --ink:#ffffff;         /* primary text */
+      --dim:#9ca3af;         /* muted text */
+      --accent:#18ff8b;      /* soft neon green */
+      --accent-2:#ff3b3b;      /* punchy red */
+      --brand:#d1ffec;        /* mint tint */
+      --glass: rgba(255,255,255,.06);
+      --radius: 1.25rem;
+    }
+    html,body{background:var(--bg); color:var(--ink); font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";}
+    a{color:inherit; text-decoration:none}
+
+    /* ====== NAV ====== */
+    .nav-blur{backdrop-filter:saturate(180%) blur(10px); background:linear-gradient(180deg, rgba(0,0,0,.75), rgba(0,0,0,.35)); border-bottom:1px solid rgba(255,255,255,.08)}
+    .navbar-brand{font-family:"Bebas Neue", system-ui; letter-spacing:.08em; font-size:1.85rem}
+    .brand-script{font-family:"Great Vibes", cursive; font-size:1.2rem; color:var(--brand)}
+    .nav-cta{border:1px solid var(--accent); color:#0b0b0b; background:linear-gradient(135deg, var(--accent), #9bffca); border-radius:999px; padding:.55rem 1rem; font-weight:700}
+    .nav-cta:hover{transform:translateY(-1px); box-shadow:0 8px 24px -10px var(--accent)}
+    .cart-icon{position:relative; display:inline-flex; align-items:center; color:var(--ink)}
+    .cart-count{position:absolute; top:-8px; right:-8px; background:var(--accent); color:#0b0b0b; font-size:0.7rem; font-weight:700; min-width:18px; height:18px; border-radius:999px; display:flex; align-items:center; justify-content:center}
+    .navbar .nav-link.active{color:var(--accent) !important}
+
+    /* ====== ABOUT HERO ====== */
+    .about-hero {
+        height: 60vh;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+    }
+    .about-hero::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,.9) 90%);
+    }
+    .about-hero .content {
+        position: relative;
+        z-index: 2;
+    }
+
+    /* ====== ABOUT SECTIONS ====== */
+    .about-section {
+        position: relative;
+    }
+    .about-card {
+        background: var(--card);
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: var(--radius);
+        padding: 2rem;
+        height: 100%;
+    }
+    .about-image {
+        border-radius: var(--radius);
+        overflow: hidden;
+        height: 100%;
+    }
+    .about-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .team-member {
+        text-align: center;
+    }
+    .team-photo {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 0 auto 1rem;
+        border: 3px solid var(--accent);
+    }
+    .team-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .value-card {
+        background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        height: 100%;
+    }
+    .value-icon {
+        font-size: 2rem;
+        color: var(--accent);
+        margin-bottom: 1rem;
+    }
+
+    /* ====== SHARED STYLES ====== */
+    .section{padding: clamp(3rem, 6vw, 6rem) 0}
+    .eyebrow{letter-spacing:.12em; text-transform:uppercase; color:var(--dim); font-size:.8rem}
+    .heading{font-family:"Gloock"; font-size: clamp(1.8rem, 4vw, 3rem)}
+    .title-xl{font-family:"Gloock", serif; font-weight:600; font-size: clamp(2.4rem, 5vw, 5rem); line-height:1.03; letter-spacing: .01em}
+    .title-xl .stroke{color:transparent; -webkit-text-stroke:1px #fff; text-stroke:1px #fff}
+    .btn-accent{background:var(--accent); color:#0b0b0b; border-radius:999px; font-weight:700}
+    .btn-ghost{border:1px solid rgba(255,255,255,.2); background:transparent; color:#fff; border-radius:999px; font-weight:700}
+    .btn-ghost:hover{background:#111}
+    footer{border-top:1px solid rgba(255,255,255,.08)}
+    .footer-brand{font-family:"Bebas Neue"}
+    .divider{height:1px; background:linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent)}
+    .story{background: radial-gradient(1200px 500px at 50% 0%, rgba(24,255,139,.08), transparent 60%)}
+    .label{display:inline-block; font-size:.75rem; color:#0b0b0b; background:var(--brand); font-weight:700; border-radius:6px; padding:.25rem .5rem}
+  </style>
+</head>
+<body>
+
+  <!-- ====== NAVBAR ====== -->
+  <nav class="navbar navbar-expand-lg fixed-top nav-blur">
+    <div class="container py-2">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'home' %}">
+        <span class="fs-3">SB</span>
+        <span class="brand-script">Crown</span>
+      </a>
+      <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon d-inline-flex align-items-center justify-content-center" style="filter:invert(1)"><i class="bi bi-list fs-1"></i></span>
+      </button>
+      <div id="nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-4">
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'shop' %}">Shop</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'lookbook' %}">Lookbook</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'our_story' %}">About</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'contact' %}">Contact</a></li>
+          <li class="nav-item"><a class="nav-link cart-icon" href="{% url 'cart' %}"><i class="bi bi-cart3 fs-5"></i><span class="cart-count">0</span></a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="{% url 'profile' %}"><i class="bi bi-person-circle fs-5"></i></a></li>
+          <li class="nav-item ms-lg-2"><a class="btn nav-cta" href="{% url 'shop' %}">Shop Now</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="about-hero" style="background-image: url('https://images.unsplash.com/photo-1523381294911-8d3cead13475?q=80&w=1800&auto=format&fit=crop');">
+    <div class="content" data-aos="fade-up">
+        <h1 class="title-xl">Our <span class="stroke">Story</span></h1>
+        <p class="lead text-white-50 mt-2">Born from a generation redefining strength through softness.</p>
+    </div>
+  </header>
+
+  <section class="section story">
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-6" data-aos="fade-right">
+          <div class="about-card">
+            <span class="eyebrow">Our Story</span>
+            <h2 class="heading mt-1">Since 2024 — Born from a generation redefining strength through softness</h2>
+            <p class="text-white-50">Rooted in authenticity, ambition, and fashion-through-storytelling. Blending Afropolitan roots, urban edge, and emotional depth. Every drop is a narrative of identity, community, and hustle—crafted with intention.</p>
+            <div class="divider my-3"></div>
+            <div class="d-flex flex-wrap gap-3">
+              <div class="label">Wear Softness</div>
+              <div class="label">Crown Comfort</div>
+              <div class="label" style="background:#ffe0e0">Gen Z Classic</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6" data-aos="fade-left">
+          <div class="about-image">
+            <img src="https://images.unsplash.com/photo-1543087903-1ac2ec7aa8c5?q=80&w=1000&auto=format&fit=crop" alt="Soft Boy Crown Team">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="text-center mx-auto mb-5" style="max-width: 700px;" data-aos="fade-up">
+        <span class="eyebrow">Mission & Vision</span>
+        <h2 class="heading">Style with purpose. Comfort with crown.</h2>
+        <p class="text-white-50">We're on a mission to create clothing that carries meaning—identity, resilience, and community. Our vision is to champion Nigerian creativity for a global streetwear audience.</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+          <div class="value-card">
+            <div class="value-icon"><i class="bi bi-heart-fill"></i></div>
+            <h3 class="h4">Authenticity</h3>
+            <p class="text-white-50">We design pieces that carry meaning—identity, resilience, community. Every stitch tells a story of who we are and where we're from.</p>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="value-card">
+            <div class="value-icon"><i class="bi bi-globe"></i></div>
+            <h3 class="h4">Global Perspective</h3>
+            <p class="text-white-50">Building a lookbook-store bridge that's smooth, visual, and fast on mobile. We connect Nigerian creativity with a global streetwear audience.</p>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="value-card">
+            <div class="value-icon"><i class="bi bi-stars"></i></div>
+            <h3 class="h4">Quality Craftsmanship</h3>
+            <p class="text-white-50">Every piece is crafted with intention and attention to detail. We believe in creating clothing that lasts, both in style and durability.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="container">
+      <div class="text-center mx-auto mb-5" style="max-width: 700px;" data-aos="fade-up">
+        <span class="eyebrow">Our Team</span>
+        <h2 class="heading">The Faces Behind The Crown</h2>
+        <p class="text-white-50">Meet the creative minds and passionate souls who bring Soft Boy Crown to life.</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+          <div class="team-member">
+            <div class="team-photo">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&auto=format&fit=crop" alt="Team Member 1">
+            </div>
+            <h3 class="h4">Oluwaseun Adeyemi</h3>
+            <p class="text-accent mb-1">Founder & Creative Director</p>
+            <p class="text-white-50 small">Visionary behind the brand. Blending street culture with emotional depth to create pieces that speak volumes.</p>
+            <div class="d-flex justify-content-center gap-3 mt-2">
+              <a href="#" class="text-white-50"><i class="bi bi-instagram"></i></a>
+              <a href="#" class="text-white-50"><i class="bi bi-twitter-x"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="team-member">
+            <div class="team-photo">
+              <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=300&auto=format&fit=crop" alt="Team Member 2">
+            </div>
+            <h3 class="h4">Amara Okafor</h3>
+            <p class="text-accent mb-1">Head of Design</p>
+            <p class="text-white-50 small">Translating stories into wearable art. Creating pieces that blend comfort with cultural significance.</p>
+            <div class="d-flex justify-content-center gap-3 mt-2">
+              <a href="#" class="text-white-50"><i class="bi bi-instagram"></i></a>
+              <a href="#" class="text-white-50"><i class="bi bi-behance"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="team-member">
+            <div class="team-photo">
+              <img src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?q=80&w=300&auto=format&fit=crop" alt="Team Member 3">
+            </div>
+            <h3 class="h4">Tunde Bakare</h3>
+            <p class="text-accent mb-1">Marketing Strategist</p>
+            <p class="text-white-50 small">Connecting the brand with the community. Building bridges between Nigerian creativity and global streetwear culture.</p>
+            <div class="d-flex justify-content-center gap-3 mt-2">
+              <a href="#" class="text-white-50"><i class="bi bi-instagram"></i></a>
+              <a href="#" class="text-white-50"><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-6 order-lg-2" data-aos="fade-left">
+          <div class="about-image">
+            <img src="https://images.unsplash.com/photo-1606293459339-aa5d34a7b0e1?q=80&w=1000&auto=format&fit=crop" alt="Our Process">
+          </div>
+        </div>
+        <div class="col-lg-6 order-lg-1" data-aos="fade-right">
+          <div class="about-card">
+            <span class="eyebrow">Our Process</span>
+            <h2 class="heading mt-1">From Concept to Crown</h2>
+            <p class="text-white-50">Every piece in our collection goes through a thoughtful journey from initial concept to final product. We believe in intentional design that honors our roots while pushing boundaries.</p>
+            <ul class="text-white-50 mt-3">
+              <li class="mb-2">Story-first approach to design</li>
+              <li class="mb-2">Sustainable and ethical production practices</li>
+              <li class="mb-2">Quality materials that stand the test of time</li>
+              <li class="mb-2">Community feedback throughout the process</li>
+            </ul>
+            <a href="lookbook.html" class="btn btn-ghost mt-3">Explore Our Lookbook</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== NEWSLETTER / CONTACT PREVIEW ====== -->
+  <section id="newsletter" class="section pt-0">
+    <div class="container">
+      <div class="newsletter p-4 p-md-5" data-aos="fade-up">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-7">
+            <h3 class="heading mb-2">Join the Crown Circle</h3>
+            <p class="text-white-50 m-0">Drops, early access, and events. No spam—just softness with intent.</p>
+          </div>
+          <div class="col-lg-5">
+            <form class="d-flex gap-2" onsubmit="event.preventDefault(); subscribe();">
+              <input class="form-control form-control-lg bg-dark text-white border-0" type="email" placeholder="your@email.com" required>
+              <button class="btn btn-accent btn-lg" type="submit">Sign up</button>
+            </form>
+            <div id="subMsg" class="small text-white-50 mt-2" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FOOTER ====== -->
+  <footer class="section pt-5 pb-4">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="footer-brand h4">SOFT BOY <span class="text-white-50">CROWN</span></div>
+          <p class="text-white-50 small">Timeless street with soft energy. Lagos-born, globally worn.</p>
+          <div class="d-flex gap-3 mt-2">
+            <a href="https://www.instagram.com/soft_boycrown7?igsh=MWgzaGVudXJnajBnNQ==" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="https://vm.tiktok.com/ZSHWjUvFVPTYy-C0RBu/" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="eyebrow mb-2">Quick Links</div>
+          <ul class="list-unstyled text-white-50 small m-0">
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'lookbook' %}">Lookbook</a></li>
+            <li><a href="{% url 'our_story' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <div class="eyebrow mb-2">Help</div>
+          <ul class="list-unstyled text-white-50 small m-0">
+            <li><a href="#">Returns & Exchange</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <div class="eyebrow mb-2">Legal</div>
+          <ul class="list-unstyled text-white-50 small m-0">
+            <li><a href="#">Terms & Conditions</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="text-white-50 small mt-4">© <span id="y"></span> Soft Boy Crown. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap + AOS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ once:true, duration:800, easing:"ease-out-cubic" });
+
+    // Sticky nav shadow on scroll
+    const nav = document.querySelector('.navbar');
+    const onScroll = () => {
+      if(window.scrollY > 12){ nav.style.boxShadow = '0 10px 30px -20px rgba(0,0,0,.8)'; }
+      else{ nav.style.boxShadow = 'none'; }
+    };
+    document.addEventListener('scroll', onScroll);
+
+    // Newsletter mock
+    function subscribe(){
+      const email = document.querySelector('#newsletter input[type="email"]').value;
+      const msg = document.getElementById('subMsg');
+      msg.textContent = `Thanks, ${email}! Welcome to the Crown Circle.`;
+    }
+
+    // Year
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

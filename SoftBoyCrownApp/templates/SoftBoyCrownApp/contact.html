@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact — SOFT BOY CROWN</title>
+  <meta name="description" content="Get in touch with Soft Boy Crown. For inquiries, collaborations, and support." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&family=Bebas+Neue&family=Gloock&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    :root{
+      --bg:#0b0b0b;          /* deep noir */
+      --card:#121212;        /* card surface */
+      --ink:#ffffff;         /* primary text */
+      --dim:#9ca3af;         /* muted text */
+      --accent:#18ff8b;      /* soft neon green */
+      --accent-2:#ff3b3b;      /* punchy red */
+      --brand:#d1ffec;        /* mint tint */
+      --glass: rgba(255,255,255,.06);
+      --radius: 1.25rem;
+    }
+    html,body{background:var(--bg); color:var(--ink); font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";}
+    a{color:inherit; text-decoration:none}
+
+    /* ====== NAV ====== */
+    .nav-blur{backdrop-filter:saturate(180%) blur(10px); background:linear-gradient(180deg, rgba(0,0,0,.75), rgba(0,0,0,.35)); border-bottom:1px solid rgba(255,255,255,.08)}
+    .navbar-brand{font-family:"Bebas Neue", system-ui; letter-spacing:.08em; font-size:1.85rem}
+    .brand-script{font-family:"Great Vibes", cursive; font-size:1.2rem; color:var(--brand)}
+    .nav-cta{border:1px solid var(--accent); color:#0b0b0b; background:linear-gradient(135deg, var(--accent), #9bffca); border-radius:999px; padding:.55rem 1rem; font-weight:700}
+    .nav-cta:hover{transform:translateY(-1px); box-shadow:0 8px 24px -10px var(--accent)}
+    .cart-icon{position:relative; display:inline-flex; align-items:center; color:var(--ink)}
+    .cart-count{position:absolute; top:-8px; right:-8px; background:var(--accent); color:#0b0b0b; font-size:0.7rem; font-weight:700; min-width:18px; height:18px; border-radius:999px; display:flex; align-items:center; justify-content:center}
+    .navbar .nav-link.active{color:var(--accent) !important}
+
+
+    /* ====== CONTACT PAGE STYLES ====== */
+    .page-header {
+        padding: clamp(4rem, 8vw, 8rem) 0;
+        text-align: center;
+        background: radial-gradient(circle at 50% 100%, rgba(24,255,139,.1), transparent 40%);
+    }
+    .contact-card {
+        background: var(--card);
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: var(--radius);
+        padding: clamp(1.5rem, 4vw, 2.5rem);
+    }
+    .contact-info .info-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    .contact-info .icon {
+        flex-shrink: 0;
+        width: 48px;
+        height: 48px;
+        display: grid;
+        place-items: center;
+        background: var(--glass);
+        border-radius: 50%;
+        font-size: 1.25rem;
+        color: var(--accent);
+    }
+    .form-control {
+        background: #1a1a1a;
+        border: 1px solid rgba(255,255,255,.1);
+        color: var(--ink);
+        padding: .8rem 1rem;
+    }
+    .form-control:focus {
+        background: #1a1a1a;
+        color: var(--ink);
+        border-color: var(--accent);
+        box-shadow: 0 0 0 .25rem rgba(24,255,139,.25);
+    }
+    .form-control::placeholder {
+        color: var(--dim);
+    }
+
+    /* ====== SHARED STYLES FROM INDEX ====== */
+    .section{padding: clamp(3rem, 6vw, 6rem) 0}
+    .eyebrow{letter-spacing:.12em; text-transform:uppercase; color:var(--dim); font-size:.8rem}
+    .heading{font-family:"Gloock"; font-size: clamp(1.8rem, 4vw, 3rem)}
+    .btn-accent{background:var(--accent); color:#0b0b0b; border-radius:999px; font-weight:700; padding: .8rem 1.5rem;}
+    .btn-accent:hover {
+        background: var(--accent);
+        color: #0b0b0b;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px -10px var(--accent);
+    }
+    footer{border-top:1px solid rgba(255,255,255,.08)}
+    .footer-brand{font-family:"Bebas Neue"}
+  </style>
+</head>
+<body>
+
+  <!-- ====== NAVBAR ====== -->
+  <nav class="navbar navbar-expand-lg fixed-top nav-blur">
+    <div class="container py-2">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'home' %}">
+        <span class="fs-3">SB</span>
+        <span class="brand-script">Crown</span>
+      </a>
+      <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon d-inline-flex align-items-center justify-content-center" style="filter:invert(1)"><i class="bi bi-list fs-1"></i></span>
+      </button>
+      <div id="nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-4">
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'shop' %}">Shop</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'lookbook' %}">Lookbook</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'our_story' %}">About</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'contact' %}">Contact</a></li>
+          <li class="nav-item"><a class="nav-link cart-icon" href="{% url 'cart' %}"><i class="bi bi-cart3 fs-5"></i><span class="cart-count">0</span></a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="{% url 'profile' %}"><i class="bi bi-person-circle fs-5"></i></a></li>
+          <li class="nav-item ms-lg-2"><a class="btn nav-cta" href="{% url 'shop' %}">Shop Now</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <div class="container" data-aos="fade-up">
+        <div class="eyebrow">Contact Us</div>
+        <h1 class="heading display-4">Get in Touch</h1>
+        <p class="lead text-white-50 mx-auto" style="max-width: 500px;">Have a question? A collaboration idea? Or just want to say hi? Drop us a line.</p>
+    </div>
+  </header>
+
+  <section class="section pt-0">
+    <div class="container">
+      <div class="row g-4 g-lg-5">
+        <div class="col-lg-5" data-aos="fade-right">
+          <div class="contact-card h-100">
+            <h3 class="heading h4 mb-4">Contact Information</h3>
+            <div class="contact-info">
+              <div class="info-item">
+                <div class="icon"><i class="bi bi-envelope-fill"></i></div>
+                <div>
+                  <h5 class="eyebrow mb-0">Email Us</h5>
+                  <a href="mailto:hello@softboycrown.com" class="text-white">hello@softboycrown.com</a>
+                </div>
+              </div>
+              <div class="info-item">
+                <div class="icon"><i class="bi bi-telephone-fill"></i></div>
+                <div>
+                  <h5 class="eyebrow mb-0">Call Us</h5>
+                  <a href="tel:+2348106164612" class="text-white">+234 810 616 4612</a>
+                </div>
+              </div>
+              <div class="info-item">
+                <div class="icon" style="color:#25D366;"><i class="bi bi-whatsapp"></i></div>
+                <div>
+                  <h5 class="eyebrow mb-0">Chat on WhatsApp</h5>
+                  <a href="https://wa.me/2348106164612" target="_blank" class="text-white">Start a Conversation</a>
+                </div>
+              </div>
+              <div class="info-item">
+                <div class="icon"><i class="bi bi-geo-alt-fill"></i></div>
+                <div>
+                  <h5 class="eyebrow mb-0">Based In</h5>
+                  <p class="text-white mb-0">Lagos, Nigeria</p>
+                </div>
+              </div>
+            </div>
+            <div class="border-top border-white border-opacity-10 my-4"></div>
+            <h5 class="eyebrow mb-3">Follow Us</h5>
+            <div class="d-flex gap-3 fs-4">
+              <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+              <a href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+              <a href="#" aria-label="Telegram"><i class="bi bi-telegram"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-7" data-aos="fade-left">
+          <div class="contact-card">
+            <h3 class="heading h4 mb-1">Send us a message</h3>
+            <p class="text-white-50 mb-4">We'll get back to you as soon as possible.</p>
+            <form id="contactForm" onsubmit="sendToWhatsApp(event);">
+              <div class="row g-3">
+                <div class="col-md-6 mb-3">
+                  <label for="name" class="form-label">Full Name</label>
+                  <input type="text" class="form-control" id="name" placeholder="John Carter" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="email" class="form-label">Email Address</label>
+                  <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+                </div>
+                <div class="col-12 mb-3">
+                  <label for="subject" class="form-label">Subject</label>
+                  <input type="text" class="form-control" id="subject" placeholder="Order Inquiry" required>
+                </div>
+                <div class="col-12 mb-3">
+                  <label for="message" class="form-label">Message</label>
+                  <textarea class="form-control" id="message" rows="5" placeholder="Your message here..." required></textarea>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-accent w-100">
+                    <i class="bi bi-send-fill me-2"></i> Send via WhatsApp
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FOOTER ====== -->
+  <footer class="section pt-5 pb-4">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="footer-brand h4">SOFT BOY <span class="text-white-50">CROWN</span></div>
+          <p class="text-white-50 small">Timeless street with soft energy. Lagos-born, globally worn.</p>
+          <div class="d-flex gap-3 mt-2">
+            <a href="https://www.instagram.com/soft_boycrown7?igsh=MWgzaGVudXJnajBnNQ==" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="https://vm.tiktok.com/ZSHWjUvFVPTYy-C0RBu/" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="eyebrow mb-2">Quick Links</div>
+          <ul class="list-unstyled text-white-50 small m-0">
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'lookbook' %}">Lookbook</a></li>
+            <li><a href="{% url 'our_story' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <div class="eyebrow mb-2">Help</div>
+          <ul class="list-unstyled text-white-50 small m-0">
+            <li><a href="#">Returns & Exchange</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <div class="eyebrow mb-2">Legal</div>
+          <ul class="list-unstyled text-white-50 small m-0">
+            <li><a href="#">Terms & Conditions</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="text-white-50 small mt-4">© <span id="y"></span> Soft Boy Crown. All rights reserved.</div>
+    </div>
+  </footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ once:true, duration:800, easing:"ease-out-cubic" });
+
+    // Sticky nav shadow on scroll
+    const nav = document.querySelector('.navbar');
+    const onScroll = () => {
+      if(window.scrollY > 12){ nav.style.boxShadow = '0 10px 30px -20px rgba(0,0,0,.8)'; }
+      else{ nav.style.boxShadow = 'none'; }
+    };
+    document.addEventListener('scroll', onScroll);
+    
+    // Contact form to WhatsApp redirect function
+    function sendToWhatsApp(event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      // Get form values
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value;
+
+      // Your WhatsApp number (without '+' or spaces)
+      const phoneNumber = '2348106164612';
+
+      // Construct the pre-filled message
+      const fullMessage = `Hello Soft Boy Crown,\n\n*Name:* ${name}\n*Email:* ${email}\n\n*Subject:* ${subject}\n\n*Message:*\n${message}`;
+
+      // Encode the message for the URL
+      const encodedMessage = encodeURIComponent(fullMessage);
+
+      // Create the WhatsApp URL
+      const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+      // Redirect the user to WhatsApp
+      window.open(whatsappURL, '_blank');
+    }
+
+    // Year
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

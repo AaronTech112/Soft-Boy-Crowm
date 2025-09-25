@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SOFT BOY CROWN — Wear Softness. Crown Comfort.</title>
+  <meta name="description" content="Soft Boy Crown — streetwear lookbook & shop. Wear softness, crown comfort. 2025 drop." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&family=Bebas+Neue&family=Gloock&family=Great+Vibes&display=swap" rel="stylesheet">
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- AOS (Animate on Scroll) -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    :root{
+      --bg:#0b0b0b;           /* deep noir */
+      --card:#121212;         /* card surface */
+      --ink:#ffffff;          /* primary text */
+      --dim:#9ca3af;          /* muted text */
+      --accent:#18ff8b;       /* soft neon green */
+      --accent-2:#ff3b3b;     /* punchy red */
+      --brand:#d1ffec;        /* mint tint */
+      --glass: rgba(255,255,255,.06);
+      --radius: 1.25rem;
+    }
+    html,body{background:var(--bg); color:var(--ink); font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";}
+    a{color:inherit; text-decoration:none}
+
+    /* ====== NAV ====== */
+    .nav-blur{backdrop-filter:saturate(180%) blur(10px); background:linear-gradient(180deg, rgba(0,0,0,.75), rgba(0,0,0,.35)); border-bottom:1px solid rgba(255,255,255,.08)}
+    .navbar-brand{font-family:"Bebas Neue", system-ui; letter-spacing:.08em; font-size:1.85rem}
+    .brand-script{font-family:"Great Vibes", cursive; font-size:1.2rem; color:var(--brand)}
+    .nav-cta{border:1px solid var(--accent); color:#0b0b0b; background:linear-gradient(135deg, var(--accent), #9bffca); border-radius:999px; padding:.55rem 1rem; font-weight:700}
+    .nav-cta:hover{transform:translateY(-1px); box-shadow:0 8px 24px -10px var(--accent)}
+    .cart-icon{position:relative; display:inline-flex; align-items:center; color:var(--ink)}
+    .cart-count{position:absolute; top:-8px; right:-8px; background:var(--accent); color:#0b0b0b; font-size:0.7rem; font-weight:700; min-width:18px; height:18px; border-radius:999px; display:flex; align-items:center; justify-content:center}
+
+    /* ====== HERO ====== */
+    .hero{position:relative; min-height: 96vh; display:grid; place-items:center; overflow:hidden}
+    .hero video, .hero .bg-img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:contrast(1.05) saturate(1.05)}
+    .hero::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,.75) 60%, rgba(0,0,0,.95) 100%)}
+    .hero-content{position:relative; z-index:2; max-width:1100px; padding: clamp(1rem, 2vw, 2rem)}
+    .tag{display:inline-flex; align-items:center; gap:.55rem; border:1px solid rgba(255,255,255,.15); background:var(--glass); border-radius:999px; padding:.35rem .7rem; font-size:.85rem; color:var(--brand)}
+    .title-xl{font-family:"Gloock", serif; font-weight:600; font-size: clamp(2.4rem, 5vw, 5rem); line-height:1.03; letter-spacing: .01em}
+    .title-xl .stroke{color:transparent; -webkit-text-stroke:1px #fff; text-stroke:1px #fff}
+    .hero-sub{max-width: 680px; color:var(--dim)}
+    .hero-ctas .btn{border-radius: 999px; padding:.85rem 1.25rem; font-weight:700}
+    .btn-accent{background:var(--accent); color:#0b0b0b}
+    .btn-ghost{border:1px solid rgba(255,255,255,.2); background:transparent; color:#fff}
+    .btn-ghost:hover{background:#111}
+
+    /* ====== MARQUEE ====== */
+    .marquee{white-space:nowrap; overflow:hidden; border-block:1px solid rgba(255,255,255,.08); background:#0e0e0e}
+    .marquee-track{display:inline-block; padding-block:.75rem; animation:scroll 28s linear infinite}
+    @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)} }
+    .marquee span{font-family:"Bebas Neue"; letter-spacing:.08em; font-size: clamp(1.2rem, 3vw, 1.8rem); margin-inline: 1.25rem; color: #e5e7eb}
+
+    /* ====== FEATURED ====== */
+    .section{padding: clamp(3rem, 6vw, 6rem) 0}
+    .eyebrow{letter-spacing:.12em; text-transform:uppercase; color:var(--dim); font-size:.8rem}
+    .heading{font-family:"Gloock"; font-size: clamp(1.8rem, 4vw, 3rem)}
+    .product-card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); border-radius: var(--radius); overflow:hidden; position:relative}
+    .product-thumb{aspect-ratio: 4/5; background:#121212; overflow:hidden}
+    .product-thumb img{width:100%; height:100%; object-fit:cover; transition: transform .6s ease}
+    .product-card:hover .product-thumb img{transform: scale(1.08)}
+    .product-meta{padding:1rem}
+    .label{display:inline-block; font-size:.75rem; color:#0b0b0b; background:var(--brand); font-weight:700; border-radius:6px; padding:.25rem .5rem}
+    .price{font-weight:800}
+    .quick{position:absolute; right:.75rem; top:.75rem; background:rgba(0,0,0,.6); border:1px solid rgba(255,255,255,.12); padding:.4rem .6rem; border-radius:999px; opacity:0; transform:translateY(-6px); transition:.25s ease}
+    .product-card:hover .quick{opacity:1; transform:translateY(0)}
+
+    /* ====== LOOKBOOK STRIP ====== */
+    .lookbook{position:relative; border-radius:var(--radius); overflow:hidden}
+    .lookbook .overlay{position:absolute; inset:0; background:linear-gradient(90deg, rgba(0,0,0,.8), rgba(0,0,0,.2))}
+    .lookbook h3{font-family:"Bebas Neue"; letter-spacing:.08em}
+
+    /* ====== STORY BLEND ====== */
+    .story{background: radial-gradient(1200px 500px at 50% 0%, rgba(24,255,139,.08), transparent 60%)}
+    .story .card{background:var(--card); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius)}
+
+    /* ====== NEWSLETTER ====== */
+    .newsletter{background:linear-gradient(180deg, rgba(24,255,139,.15), rgba(24,255,139,.02)); border:1px solid rgba(24,255,139,.25); border-radius:var(--radius)}
+
+    /* ====== FOOTER ====== */
+    footer{border-top:1px solid rgba(255,255,255,.08)}
+    .footer-brand{font-family:"Bebas Neue"}
+
+    /* Badges */
+    .drop-badge{position:absolute; left:1rem; top:1rem; z-index:2; background: #000; color:var(--brand); border:1px solid rgba(255,255,255,.08); padding:.25rem .5rem; border-radius:6px; font-size:.75rem}
+
+    /* Tiny helpers */
+    .divider{height:1px; background:linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent)}
+  </style>
+</head>
+<body>
+  <!-- ====== NAVBAR ====== -->
+  <nav class="navbar navbar-expand-lg fixed-top nav-blur">
+    <div class="container py-2">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'home' %}">
+        <span class="fs-3">SB</span>
+        <span class="brand-script">Crown</span>
+      </a>
+      <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon d-inline-flex align-items-center justify-content-center" style="filter:invert(1)"><i class="bi bi-list fs-1"></i></span>
+      </button>
+      <div id="nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-4">
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'shop' %}">Shop</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'lookbook' %}">Lookbook</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'our_story' %}">About</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'contact' %}">Contact</a></li>
+          <li class="nav-item"><a class="nav-link cart-icon" href="{% url 'cart' %}"><i class="bi bi-cart3 fs-5"></i><span class="cart-count">0</span></a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="{% url 'profile' %}"><i class="bi bi-person-circle fs-5"></i></a></li>
+          <li class="nav-item ms-lg-2"><a class="btn nav-cta" href="{% url 'shop' %}">Shop Now</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- ====== HERO ====== -->
+  <header class="hero">
+    <!-- If you have a brand video, replace the src below. Otherwise comment it out and use a background image. -->
+    <video class="" autoplay muted loop playsinline>
+      <source src="{% static 'herovid2.mp4' %}" type="video/mp4" />
+    </video>
+    <!-- Optional static image fallback -->
+    <img class="bg-img d-none" src="https://images.unsplash.com/photo-1520975693416-0bf54f4f8ec8?q=80&w=1400&auto=format&fit=crop" alt="Soft Boy Crown"/>
+
+    <div class="hero-content text-center" data-aos="fade-up">
+      <span class="tag"><i class="bi bi-stars"></i> 2025 Drop • Limited</span>
+      <h1 class="title-xl mt-3">
+        SOFT BOY <span class="stroke">CROWN</span>
+      </h1>
+      <p class="hero-sub mx-auto lead mt-3">Wear softness. Crown comfort. Street-bred, story-led. A lookbook-to-store experience crafted for the new classic—Gen Z with heritage.</p>
+      <div class="hero-ctas d-flex gap-2 justify-content-center mt-4">
+        <a href="{% url 'shop' %}" class="btn btn-accent"><i class="bi bi-bag-fill me-2"></i>Shop the Drop</a>
+        <a href="{% url 'lookbook' %}" class="btn btn-ghost"><i class="bi bi-play-fill me-2"></i>View Lookbook</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ====== MARQUEE ====== -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>SOFT PEOPLE • FASHION</span>
+      <span>WEAR SOFTNESS • CROWN COMFORT</span>
+      <span>2025 DROP</span>
+      <span>SOFT BOY CROWN</span>
+      <span>THREADS OF NIGERIA</span>
+      <span>TIMELESS TEE</span>
+      <span>CONFIDENCE SNAPBACK</span>
+      <span>ELECTRIC PULSE</span>
+      <span>HOPE IS ALIVE</span>
+      <!-- duplicate once for seamless loop -->
+      <span>SOFT PEOPLE • FASHION</span>
+      <span>WEAR SOFTNESS • CROWN COMFORT</span>
+      <span>2025 DROP</span>
+      <span>SOFT BOY CROWN</span>
+      <span>THREADS OF NIGERIA</span>
+      <span>TIMELESS TEE</span>
+      <span>CONFIDENCE SNAPBACK</span>
+      <span>ELECTRIC PULSE</span>
+      <span>HOPE IS ALIVE</span>
+    </div>
+  </div>
+
+  <!-- ====== FEATURED ====== -->
+  <section id="featured" class="section">
+    <div class="container">
+      <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+        <div>
+          <div class="eyebrow">Featured Collection</div>
+          <h2 class="heading">The Drops</h2>
+        </div>
+        <a href="{% url 'shop' %}" class="text-white-50">View all products <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="row g-4">
+        {% for product in products %}
+        <div class="col-12 col-sm-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|divisibleby:3|yesno:'0,100,200' }}">
+          <article class="product-card h-100">
+            <span class="drop-badge">{{ product.category.name }}</span>
+            <button class="quick">Quick view</button>
+            <div class="product-thumb">
+              {% if product.images.first %}
+                <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}"/>
+              {% else %}
+                <img src="{% static 'SoftBoyCrownApp/images/placeholder.jpg' %}" alt="{{ product.name }}"/>
+              {% endif %}
+            </div>
+            <div class="product-meta">
+              <div class="d-flex align-items-center justify-content-between mb-1">
+                <h3 class="h5 m-0">{{ product.name }}</h3>
+                <div>
+                  {% if product.slash_price %}
+                    <span class="text-white-50 small text-decoration-line-through me-2">₦{{ product.slash_price }}</span>
+                  {% endif %}
+                  <span class="price">₦{{ product.price }}</span>
+                </div>
+              </div>
+              <p class="text-white-50 small mb-3">{{ product.description|striptags|truncatechars:100 }}</p>
+              <div class="d-flex gap-2">
+                <a class="btn btn-sm btn-accent flex-grow-1" href="{% url 'product_detail' product.id %}">Add to cart</a>
+                <a class="btn btn-sm btn-ghost" href="{% url 'product_detail' product.id %}">Details</a>
+              </div>
+              {% if product.colors.all or product.sizes.all %}
+              <div class="mt-2 d-flex gap-2 flex-wrap">
+                {% if product.colors.all %}
+                  <div class="small text-white-50">
+                    Colors: 
+                    {% for color in product.colors.all %}
+                      <span class="badge" style="background-color: {{ color.hex_code }}; color: {% if color.name == 'White' or color.name == 'Yellow' %}#000{% else %}#fff{% endif %}">{{ color.name }}</span>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+                {% if product.sizes.all %}
+                  <div class="small text-white-50">
+                    Sizes: 
+                    {% for size in product.sizes.all %}
+                      <span class="badge bg-secondary">{{ size.name }}</span>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+              {% endif %}
+            </div>
+          </article>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+          <p class="text-white-50">No products available at the moment. Check back soon!</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== LOOKBOOK STRIP ====== -->
+  <section id="lookbook" class="section pt-0">
+    <div class="container">
+      <div class="lookbook position-relative" data-aos="zoom-in">
+        <img src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?q=80&w=1600&auto=format&fit=crop" class="w-100" style="aspect-ratio: 16/6; object-fit:cover" alt="Lookbook"/>
+        <div class="overlay d-flex align-items-center">
+          <div class="p-4 p-md-5">
+            <h3 class="display-5 mb-2">Lookbook — <span style="color:var(--accent)">Soft People</span></h3>
+            <p class="text-white-50 mb-0">Editorial stories that blend Lagos grit with soft energy. Scroll, hover, feel the texture.</p>
+            <div class="mt-3 d-flex gap-2">
+              <a class="btn btn-accent" href="{% url 'lookbook' %}">Open Lookbook</a>
+              <a class="btn btn-ghost" href="">Play Campaign Video</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== STORY ====== -->
+  <section id="story" class="section story">
+    <div class="container">
+      <div class="row g-4 align-items-stretch">
+        <div class="col-lg-6" data-aos="fade-right">
+          <div class="card h-100 p-4 p-md-5">
+            <span class="eyebrow">Our Story</span>
+            <h3 class="heading mt-1">Since 2024 — Born from a generation redefining strength through softness</h3>
+            <p class="text-white-50">Rooted in authenticity, ambition, and fashion-through-storytelling. Blending Afropolitan roots, urban edge, and emotional depth. Every drop is a narrative of identity, community, and hustle—crafted with intention.</p>
+            <div class="divider my-3"></div>
+            <div class="d-flex flex-wrap gap-3">
+              <div class="label">Wear Softness</div>
+              <div class="label">Crown Comfort</div>
+              <div class="label" style="background:#ffe0e0">Gen Z Classic</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6" data-aos="fade-left">
+          <div class="card h-100 p-4 p-md-5">
+            <span class="eyebrow">Mission & Vision</span>
+            <h3 class="heading mt-1">Style with purpose. Comfort with crown.</h3>
+            <ul class="text-white-50 m-0 ps-3 small">
+              <li>Design pieces that carry meaning—identity, resilience, community.</li>
+              <li>Build a lookbook-store bridge that’s smooth, visual, and fast on mobile.</li>
+              <li>Champion Nigerian creativity for a global streetwear audience.</li>
+            </ul>
+            <div class="mt-4">
+              <a href="{% url 'contact' %}" class="btn btn-ghost">Talk to Us</a>
+              <a href="{% url 'shop' %}" class="btn btn-accent ms-2">Shop Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== NEWSLETTER / CONTACT PREVIEW ====== -->
+  <section id="newsletter" class="section pt-0">
+    <div class="container">
+      <div class="newsletter p-4 p-md-5" data-aos="fade-up">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-7">
+            <h3 class="heading mb-2">Join the Crown Circle</h3>
+            <p class="text-white-50 m-0">Drops, early access, and events. No spam—just softness with intent.</p>
+          </div>
+          <div class="col-lg-5">
+            <form class="d-flex gap-2" onsubmit="event.preventDefault(); subscribe();">
+              {% comment %} <input class="form-control form-control-lg bg-dark text-white border-0" type="email" placeholder="your@email.com" required> {% endcomment %}
+              <a href="{% url 'shop' %}" class="btn btn-accent btn-lg">Shop now</a>
+            </form>
+            <div id="subMsg" class="small text-white-50 mt-2" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FOOTER ====== -->
+  <footer class="section pt-5 pb-4">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="footer-brand h4">SOFT BOY <span class="text-white-50">CROWN</span></div>
+          <p class="text-white-50 small">Timeless street with soft energy. Lagos-born, globally worn.</p>
+          <div class="d-flex gap-3 mt-2">
+            <a href="https://www.instagram.com/soft_boycrown7?igsh=MWgzaGVudXJnajBnNQ==" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="https://vm.tiktok.com/ZSHWjUvFVPTYy-C0RBu/" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="eyebrow mb-2">Quick Links</div>
+          <ul class="list-unstyled text-white-50 small m-0">
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'lookbook' %}">Lookbook</a></li>
+            <li><a href="{% url 'our_story' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <div class="eyebrow mb-2">Help</div>
+          <ul class="list-unstyled text-white-50 small m-0">
+            <li><a href="#">Returns & Exchange</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <div class="eyebrow mb-2">Legal</div>
+          <ul class="list-unstyled text-white-50 small m-0">
+            <li><a href="#">Terms & Conditions</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="text-white-50 small mt-4">© <span id="y"></span> Soft Boy Crown. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap + AOS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ once:true, duration:800, easing:"ease-out-cubic" });
+
+    // Sticky nav shadow on scroll
+    const nav = document.querySelector('.navbar');
+    const onScroll = () => {
+      if(window.scrollY > 12){ nav.style.boxShadow = '0 10px 30px -20px rgba(0,0,0,.8)'; }
+      else{ nav.style.boxShadow = 'none'; }
+    };
+    document.addEventListener('scroll', onScroll);
+
+    // Newsletter mock
+    function subscribe(){
+      const email = document.querySelector('#newsletter input[type="email"]').value;
+      const msg = document.getElementById('subMsg');
+      msg.textContent = `Thanks, ${email}! Welcome to the Crown Circle.`;
+    }
+
+    // Replaceable asset helper (drop your brand assets here)
+    // 1) Swap the <video src> with your hero.mp4
+    // 2) Replace product <img> src with your images
+    // 3) Colors live in :root CSS variables
+
+    // Year
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

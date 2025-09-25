@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SOFT BOY CROWN — Shop Collection</title>
+  <meta name="description" content="Shop the latest Soft Boy Crown collection. Streetwear with softness, crown with comfort." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&family=Bebas+Neue&family=Gloock&family=Great+Vibes&display=swap" rel="stylesheet">
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- AOS (Animate on Scroll) -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    :root{
+      --bg:#0b0b0b;           /* deep noir */
+      --card:#121212;         /* card surface */
+      --ink:#ffffff;          /* primary text */
+      --dim:#9ca3af;          /* muted text */
+      --accent:#18ff8b;       /* soft neon green */
+      --accent-2:#ff3b3b;     /* punchy red */
+      --brand:#d1ffec;        /* mint tint */
+      --glass: rgba(255,255,255,.06);
+      --radius: 1.25rem;
+    }
+    html,body{background:var(--bg); color:var(--ink); font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";}
+    a{color:inherit; text-decoration:none}
+
+    /* ====== NAV ====== */
+    .nav-blur{backdrop-filter:saturate(180%) blur(10px); background:linear-gradient(180deg, rgba(0,0,0,.75), rgba(0,0,0,.35)); border-bottom:1px solid rgba(255,255,255,.08)}
+    .navbar-brand{font-family:"Bebas Neue", system-ui; letter-spacing:.08em; font-size:1.85rem}
+    .brand-script{font-family:"Great Vibes", cursive; font-size:1.2rem; color:var(--brand)}
+    .nav-cta{border:1px solid var(--accent); color:#0b0b0b; background:linear-gradient(135deg, var(--accent), #9bffca); border-radius:999px; padding:.55rem 1rem; font-weight:700}
+    .nav-cta:hover{transform:translateY(-1px); box-shadow:0 8px 24px -10px var(--accent)}
+    .cart-icon{position:relative; display:inline-flex; align-items:center; color:var(--ink)}
+    .cart-count{position:absolute; top:-8px; right:-8px; background:var(--accent); color:#0b0b0b; font-size:0.7rem; font-weight:700; min-width:18px; height:18px; border-radius:999px; display:flex; align-items:center; justify-content:center}
+
+    /* ====== SHOP HEADER ====== */
+    .shop-header{position:relative; min-height: 40vh; display:grid; place-items:center; overflow:hidden; background:linear-gradient(180deg, rgba(24,255,139,.15), rgba(24,255,139,.02))}
+    .shop-header::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.25) 0%, rgba(0,0,0,.5) 100%)}
+    .shop-content{position:relative; z-index:2; max-width:1100px; padding: clamp(1rem, 2vw, 2rem)}
+    .tag{display:inline-flex; align-items:center; gap:.55rem; border:1px solid rgba(255,255,255,.15); background:var(--glass); border-radius:999px; padding:.35rem .7rem; font-size:.85rem; color:var(--brand)}
+    .title-xl{font-family:"Gloock", serif; font-weight:600; font-size: clamp(2.4rem, 5vw, 5rem); line-height:1.03; letter-spacing: .01em}
+    .title-xl .stroke{color:transparent; -webkit-text-stroke:1px #fff; text-stroke:1px #fff}
+
+    /* ====== SHOP FILTERS ====== */
+    .shop-filters{background:var(--card); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); padding:1.5rem}
+    .filter-group{margin-bottom:1.5rem}
+    .filter-title{font-weight:600; margin-bottom:0.75rem; color:var(--ink)}
+    .search-bar{position:relative; margin-bottom:1.5rem}
+    .search-bar input{background:var(--bg); border:1px solid rgba(255,255,255,.15); color:var(--ink); padding:0.75rem 1rem 0.75rem 2.5rem; border-radius:0.5rem; width:100%}
+    .search-bar i{position:absolute; left:1rem; top:50%; transform:translateY(-50%); color:var(--dim)}
+    .category-buttons{display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.5rem}
+    .category-btn{background:var(--bg); border:1px solid rgba(255,255,255,.15); color:var(--dim); padding:0.5rem 1rem; border-radius:0.5rem; transition:all 0.2s ease; cursor:pointer}
+    .category-btn:hover, .category-btn.active{background:var(--accent); color:#0b0b0b; border-color:var(--accent)}
+    .price-range{width:100%}
+    .price-inputs{display:flex; gap:0.5rem; margin-top:0.5rem}
+    .price-inputs input{background:var(--bg); border:1px solid rgba(255,255,255,.15); color:var(--ink); padding:0.5rem; border-radius:0.25rem; width:100%}
+
+    /* ====== SHOP SORTING ====== */
+    .shop-sorting{display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem}
+    .sort-select{background:var(--card); border:1px solid rgba(255,255,255,.15); color:var(--ink); padding:0.5rem 1rem; border-radius:0.25rem}
+    .view-options{display:flex; gap:0.5rem}
+    .view-option{background:var(--card); border:1px solid rgba(255,255,255,.15); color:var(--dim); padding:0.5rem; border-radius:0.25rem; cursor:pointer}
+    .view-option.active{color:var(--accent); border-color:var(--accent)}
+
+    /* ====== PRODUCT CARDS ====== */
+    .section{padding: clamp(3rem, 6vw, 6rem) 0}
+    .eyebrow{letter-spacing:.12em; text-transform:uppercase; color:var(--dim); font-size:.8rem}
+    .heading{font-family:"Gloock"; font-size: clamp(1.8rem, 4vw, 3rem)}
+    .product-card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); border-radius: var(--radius); overflow:hidden; position:relative}
+    .product-thumb{aspect-ratio: 4/5; background:#121212; overflow:hidden}
+    .product-thumb img{width:100%; height:100%; object-fit:cover; transition: transform .6s ease}
+    .product-card:hover .product-thumb img{transform: scale(1.08)}
+    .product-meta{padding:1rem}
+    .label{display:inline-block; font-size:.75rem; color:#0b0b0b; background:var(--brand); font-weight:700; border-radius:6px; padding:.25rem .5rem}
+    .price{font-weight:800}
+    .quick{position:absolute; right:.75rem; top:.75rem; background:rgba(0,0,0,.6); border:1px solid rgba(255,255,255,.12); padding:.4rem .6rem; border-radius:999px; opacity:0; transform:translateY(-6px); transition:.25s ease}
+    .product-card:hover .quick{opacity:1; transform:translateY(0)}
+    .btn-accent{background:var(--accent); color:#0b0b0b; border:1px solid var(--accent); transition:all 0.2s ease}
+    .btn-accent:hover{background:#00e070; border-color:#00e070; transform:translateY(-2px); box-shadow:0 4px 12px -4px var(--accent)}
+
+    /* ====== PAGINATION ====== */
+    .pagination{display:flex; justify-content:center; margin-top:2rem}
+    .page-item .page-link{background:var(--card); border:1px solid rgba(255,255,255,.15); color:var(--dim); margin:0 0.25rem}
+    .page-item.active .page-link{background:var(--accent); border-color:var(--accent); color:#0b0b0b}
+
+    /* ====== NEWSLETTER ====== */
+    .newsletter{background:linear-gradient(180deg, rgba(24,255,139,.15), rgba(24,255,139,.02)); border:1px solid rgba(24,255,139,.25); border-radius:var(--radius)}
+
+    /* ====== FOOTER ====== */
+    footer{border-top:1px solid rgba(255,255,255,.08)}
+    .footer-brand{font-family:"Bebas Neue"}
+
+    /* Badges */
+    .drop-badge{position:absolute; left:1rem; top:1rem; z-index:2; background: #000; color:var(--brand); border:1px solid rgba(255,255,255,.08); padding:.25rem .5rem; border-radius:6px; font-size:.75rem}
+
+    /* Tiny helpers */
+    .divider{height:1px; background:linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent)}
+  </style>
+</head>
+<body>
+  <!-- ====== NAVBAR ====== -->
+  <nav class="navbar navbar-expand-lg fixed-top nav-blur">
+    <div class="container py-2">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'home' %}">
+        <span class="fs-3">SB</span>
+        <span class="brand-script">Crown</span>
+      </a>
+      <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon d-inline-flex align-items-center justify-content-center" style="filter:invert(1)"><i class="bi bi-list fs-1"></i></span>
+      </button>
+      <div id="nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-4">
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'shop' %}">Shop</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'lookbook' %}">Lookbook</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'our_story' %}">About</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'contact' %}">Contact</a></li>
+          <li class="nav-item"><a class="nav-link cart-icon" href="{% url 'cart' %}"><i class="bi bi-cart3 fs-5"></i><span class="cart-count">0</span></a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="{% url 'profile' %}"><i class="bi bi-person-circle fs-5"></i></a></li>
+          <li class="nav-item ms-lg-2"><a class="btn nav-cta" href="{% url 'shop' %}">Shop Now</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ====== SHOP HEADER ====== -->
+  <header class="shop-header">
+    <div class="shop-content text-center" data-aos="fade-up">
+      <span class="tag"><i class="bi bi-stars"></i> 2025 Collection</span>
+      <h1 class="title-xl mt-3">
+        SHOP <span class="stroke">COLLECTION</span>
+      </h1>
+      <p class="mx-auto lead mt-3 text-white-50">Browse our complete collection of streetwear essentials. Wear softness, crown comfort.</p>
+    </div>
+  </header>
+
+  <!-- ====== SHOP CONTENT ====== -->
+  <section class="section">
+    <div class="container">
+      <div class="row g-4">
+        <!-- Sidebar Filters -->
+        <div class="col-lg-3">
+          <div class="shop-filters" data-aos="fade-right">
+            <h3 class="h5 mb-4">Filter Products</h3>
+            
+            <!-- Search Bar -->
+            <form method="get" class="search-bar mb-4">
+              <i class="bi bi-search"></i>
+              <input type="text" name="search" placeholder="Search products..." value="{{ request.GET.search }}" class="w-100">
+            </form>
+            
+            <!-- Category Filter -->
+            <div class="filter-group">
+              <h4 class="filter-title">Category</h4>
+              <div class="category-buttons">
+                <a href="?search={{ request.GET.search }}" class="category-btn {% if not request.GET.category %}active{% endif %}">All Products</a>
+                {% for category in categories %}
+                <a href="?category={{ category.id }}&search={{ request.GET.search }}" class="category-btn {% if request.GET.category == category.id|stringformat:'s' %}active{% endif %}">{{ category.name }}</a>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Products Grid -->
+        <div class="col-lg-9">
+          <!-- Sorting Options -->
+          <div class="shop-sorting" data-aos="fade-up">
+            <div>
+              <span class="text-white-50">Showing {{ products.count }} products</span>
+            </div>
+            <div class="d-flex gap-3 align-items-center">
+              <select class="sort-select">
+                <option>Sort by: Featured</option>
+                <option>Price: Low to High</option>
+                <option>Price: High to Low</option>
+                <option>Newest First</option>
+              </select>
+              <div class="view-options d-none d-md-flex">
+                <button class="view-option active"><i class="bi bi-grid-3x3"></i></button>
+                <button class="view-option"><i class="bi bi-list"></i></button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Products Grid -->
+          <div class="row g-4 mt-2">
+            {% for product in products %}
+            <div class="col-12 col-sm-6 col-lg-4" data-aos="fade-up" data-aos-delay="{% cycle '0' '100' '200' %}">
+              <article class="product-card h-100">
+                {% if product.category %}
+                <span class="drop-badge">{{ product.category.name }}</span>
+                {% endif %}
+                <button class="quick">Quick view</button>
+                <div class="product-thumb">
+
+                  <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}"/>
+          
+                </div>
+                <div class="product-meta">
+                  <div class="d-flex align-items-center justify-content-between mb-1">
+                    <h3 class="h5 m-0">{{ product.name }}</h3>
+                    <span class="price">₦{{ product.price }}</span>
+                  </div>
+                  <p class="text-white-50 small mb-3">{{ product.description|striptags|truncatechars:100 }}</p>
+                  <div class="d-flex gap-2">
+                    <a class="btn btn-sm btn-accent flex-grow-1 fw-bold" href="{% url 'product_detail' product.id %}">Add to cart</a>
+                    <a class="btn btn-sm btn-ghost" href="{% url 'product_detail' product.id %}">Details</a>
+                  </div>
+                </div>
+              </article>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+              <p class="text-white-50">No products found matching your criteria.</p>
+            </div>
+            {% endfor %}
+          </div>
+          
+          <!-- Pagination -->
+          <nav aria-label="Page navigation" class="mt-5">
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="#"><i class="bi bi-chevron-left"></i></a></li>
+              <li class="page-item active"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#"><i class="bi bi-chevron-right"></i></a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== NEWSLETTER / CONTACT PREVIEW ====== -->
+  <section id="newsletter" class="section pt-0">
+    <div class="container">
+      <div class="newsletter p-4 p-md-5" data-aos="fade-up">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-7">
+            <h3 class="heading mb-2">Join the Crown Circle</h3>
+            <p class="text-white-50 m-0">Drops, early access, and events. No spam—just softness with intent.</p>
+          </div>
+          <div class="col-lg-5">
+            <form class="d-flex gap-2" onsubmit="event.preventDefault(); subscribe();">
+              {% comment %} <input class="form-control form-control-lg bg-dark text-white border-0" type="email" placeholder="your@email.com" required> {% endcomment %}
+              <button class="btn btn-accent btn-lg" type="submit">Sign up</button>
+            </form>
+            <div id="subMsg" class="small text-white-50 mt-2" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FOOTER ====== -->
+  <footer class="section pt-5 pb-4">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="footer-brand h4">SOFT BOY <span class="text-white-50">CROWN</span></div>
+          <p class="text-white-50 small">Timeless street with soft energy. Lagos-born, globally worn.</p>
+          <div class="d-flex gap-3 mt-2">
+            <a href="https://www.instagram.com/soft_boycrown7?igsh=MWgzaGVudXJnajBnNQ==" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="https://vm.tiktok.com/ZSHWjUvFVPTYy-C0RBu/" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="eyebrow mb-2">Quick Links</div>
+          <ul class="list-unstyled text-white-50 small m-0">
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'lookbook' %}">Lookbook</a></li>
+            <li><a href="{% url 'our_story' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <div class="eyebrow mb-2">Help</div>
+          <ul class="list-unstyled text-white-50 small m-0">
+            <li><a href="#">Returns & Exchange</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <div class="eyebrow mb-2">Legal</div>
+          <ul class="list-unstyled text-white-50 small m-0">
+            <li><a href="#">Terms & Conditions</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="text-white-50 small mt-4">© <span id="y"></span> Soft Boy Crown. All rights reserved.</div>
+    </div>
+  </footer>
+
+
+  <!-- Bootstrap + AOS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ once:true, duration:800, easing:"ease-out-cubic" });
+
+    // Sticky nav shadow on scroll
+    const nav = document.querySelector('.navbar');
+    const onScroll = () => {
+      if(window.scrollY > 12){ nav.style.boxShadow = '0 10px 30px -20px rgba(0,0,0,.8)'; }
+      else{ nav.style.boxShadow = 'none'; }
+    };
+    document.addEventListener('scroll', onScroll);
+
+    // Newsletter mock
+    function subscribe(){
+      const email = document.querySelector('#newsletter input[type="email"]').value;
+      const msg = document.getElementById('subMsg');
+      msg.textContent = `Thanks, ${email}! Welcome to the Crown Circle.`;
+    }
+
+    // Filter functionality
+    document.querySelector('.btn-accent').addEventListener('click', function() {
+      // In a real implementation, this would filter products based on selected options
+      alert('Filters applied! This would filter the products in a real implementation.');
+    });
+
+    // View options toggle
+    const viewOptions = document.querySelectorAll('.view-option');
+    viewOptions.forEach(option => {
+      option.addEventListener('click', function() {
+        viewOptions.forEach(opt => opt.classList.remove('active'));
+        this.classList.add('active');
+        // In a real implementation, this would change the product grid layout
+      });
+    });
+
+    // Category buttons functionality
+     document.addEventListener('DOMContentLoaded', function() {
+       // Category filter buttons
+       const categoryButtons = document.querySelectorAll('.filter-group:nth-of-type(2) .category-btn');
+       categoryButtons.forEach(button => {
+         button.addEventListener('click', function() {
+           categoryButtons.forEach(btn => btn.classList.remove('active'));
+           this.classList.add('active');
+         });
+       });
+       
+       // Size filter buttons
+       const sizeButtons = document.querySelectorAll('.filter-group:nth-of-type(3) .category-btn');
+       sizeButtons.forEach(button => {
+         button.addEventListener('click', function() {
+           this.classList.toggle('active');
+         });
+       });
+       
+       // Search functionality
+       const searchInput = document.querySelector('.search-bar input');
+       if (searchInput) {
+         searchInput.addEventListener('input', function() {
+           console.log('Searching for:', this.value);
+           // Actual search implementation would go here
+         });
+       }
+     });
+
+    // Year
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

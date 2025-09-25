@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SOFT BOY CROWN — Thank You</title>
+  <meta name="description" content="Soft Boy Crown — Thank you for your purchase. Wear softness, crown comfort." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&family=Bebas+Neue&family=Gloock&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0b0b0b;
+      --card: #121212;
+      --ink: #ffffff;
+      --dim: #9ca3af;
+      --accent: #18ff8b;
+      --accent-2: #ff3b3b;
+      --brand: #d1ffec;
+      --glass: rgba(255,255,255,.06);
+      --radius: 1.25rem;
+    }
+    html, body { background: var(--bg); color: var(--ink); font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+    a { color: inherit; text-decoration: none; }
+    .nav-blur { backdrop-filter: saturate(180%) blur(10px); background: linear-gradient(180deg, rgba(0,0,0,.75), rgba(0,0,0,.35)); border-bottom: 1px solid rgba(255,255,255,.08); }
+    .navbar-brand { font-family: "Bebas Neue", system-ui; letter-spacing: .08em; font-size: 1.85rem; }
+    .brand-script { font-family: "Great Vibes", cursive; font-size: 1.2rem; color: var(--brand); }
+    .nav-cta { border: 1px solid var(--accent); color: #0b0b0b; background: linear-gradient(135deg, var(--accent), #9bffca); border-radius: 999px; padding: .55rem 1rem; font-weight: 700; }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px -10px var(--accent); }
+    .cart-icon { position: relative; display: inline-flex; align-items: center; color: var(--ink); }
+    .cart-count { position: absolute; top: -8px; right: -8px; background: var(--accent); color: #0b0b0b; font-size: 0.7rem; font-weight: 700; min-width: 18px; height: 18px; border-radius: 999px; display: flex; align-items: center; justify-content: center; }
+    .thank-you-header { padding: clamp(6rem, 10vw, 10rem) 0 clamp(3rem, 5vw, 5rem); background: linear-gradient(180deg, rgba(24,255,139,.08), transparent 80%); }
+    .eyebrow { letter-spacing: .12em; text-transform: uppercase; color: var(--dim); font-size: .8rem; }
+    .heading { font-family: "Gloock"; font-size: clamp(1.8rem, 4vw, 3rem); }
+    .section { padding: clamp(3rem, 6vw, 6rem) 0; }
+    .order-details { background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding: 1.5rem; }
+    .order-item { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,.04); }
+    .order-item:last-child { border-bottom: none; }
+    .order-item-img { width: 50px; height: 50px; object-fit: cover; border-radius: 0.25rem; }
+    .order-item-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.25rem; }
+    .order-item-meta { color: var(--dim); font-size: 0.8rem; }
+    .order-item-price { font-weight: 700; margin-left: auto; }
+    .summary-row { display: flex; justify-content: space-between; margin-bottom: .75rem; }
+    .summary-row.total { border-top: 1px solid rgba(255,255,255,.08); padding-top: 1rem; margin-top: 1rem; font-weight: 700; font-size: 1.1rem; }
+    .summary-label { color: var(--dim); }
+    .btn-accent { background: var(--accent); color: #0b0b0b; border-radius: 999px; padding: .8rem 1.2rem; font-weight: 800; border: none; transition: transform .2s; width: 100%; }
+    .btn-accent:hover { transform: translateY(-2px); }
+    footer { border-top: 1px solid rgba(255,255,255,.08); }
+    .footer-brand { font-family: "Bebas Neue"; }
+    .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent); }
+    .toast { background: var(--card); border: 1px solid var(--glass); color: var(--ink); border-radius: var(--radius); }
+    .toast-success { border-left: 4px solid var(--accent); }
+    .toast-error { border-left: 4px solid var(--accent-2); }
+    .toast .btn-close { filter: invert(1); }
+  </style>
+</head>
+<body>
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="position-fixed top-0 end-0 p-3" style="z-index: 1050;"></div>
+
+  <!-- ====== NAVBAR ====== -->
+  <nav class="navbar navbar-expand-lg fixed-top nav-blur">
+    <div class="container py-2">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'home' %}">
+        <span class="fs-3">SB</span>
+        <span class="brand-script">Crown</span>
+      </a>
+      <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon d-inline-flex align-items-center justify-content-center" style="filter:invert(1)"><i class="bi bi-list fs-1"></i></span>
+      </button>
+      <div id="nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-4">
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'shop' %}">Shop</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'lookbook' %}">Lookbook</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'our_story' %}">About</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'contact' %}">Contact</a></li>
+          <li class="nav-item"><a class="nav-link cart-icon" href="{% url 'cart' %}"><i class="bi bi-cart3 fs-5"></i><span class="cart-count">{{ cart_count }}</span></a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="{% url 'profile' %}"><i class="bi bi-person-circle fs-5"></i></a></li>
+          <li class="nav-item ms-lg-2"><a class="btn nav-cta" href="{% url 'shop' %}">Shop Now</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ====== THANK YOU HEADER ====== -->
+  <header class="thank-you-header">
+    <div class="container text-center">
+      <div class="eyebrow">Soft Boy Crown</div>
+      <h1 class="heading mb-3">Thank You for Your Order!</h1>
+      <p class="text-white-50 mx-auto" style="max-width:600px">Your order #{{ transaction.tx_ref }} has been received. You'll receive a confirmation email soon.</p>
+    </div>
+  </header>
+
+  <!-- ====== ORDER DETAILS ====== -->
+  <section class="container py-5">
+    {% if messages %}
+    <div class="container mt-3">
+      {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'success' %}success{% else %}danger{% endif %} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="order-details" data-aos="fade-up">
+      <h2 class="h4 mb-4">Order Details</h2>
+      <div class="mb-4">
+        <div class="summary-row">
+          <div class="summary-label">Order Number</div>
+          <div>{{ transaction.tx_ref }}</div>
+        </div>
+        <div class="summary-row">
+          <div class="summary-label">Order Date</div>
+          <div>{{ transaction.created_at|date:"F d, Y" }}</div>
+        </div>
+        <div class="summary-row">
+          <div class="summary-label">Shipping Address</div>
+          <div>
+            {{ transaction.address.full_name }}<br>
+            {{ transaction.address.street }}<br>
+            {{ transaction.address.city }}, {{ transaction.address.state }} {{ transaction.address.postal_code }}<br>
+            {{ transaction.address.country }}<br>
+            {{ transaction.address.phone_number }}
+          </div>
+        </div>
+        {% if transaction.order_note %}
+        <div class="summary-row">
+          <div class="summary-label">Order Note</div>
+          <div>{{ transaction.order_note }}</div>
+        </div>
+        {% endif %}
+      </div>
+      <div class="order-items mb-4">
+        {% for item in transaction.orderitem_set.all %}
+        <div class="order-item">
+          {% if item.product.images.first %}
+            <img src="{{ item.product.images.first.image.url }}" alt="{{ item.product.name }}" class="order-item-img">
+          {% else %}
+            <img src="{% static 'images/placeholder.jpg' %}" alt="{{ item.product.name }} - No image" class="order-item-img">
+          {% endif %}
+          <div>
+            <div class="order-item-title">{{ item.product.name }}</div>
+            <div class="order-item-meta">
+              {% if item.size %}Size: {{ item.size.name }}{% else %}No size{% endif %}
+              {% if item.color %} • Color: {{ item.color.name }}{% endif %}
+              • Qty: {{ item.quantity }}
+            </div>
+          </div>
+          <div class="order-item-price">₦{{ item.get_total_price }}</div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="summary-row">
+        <div class="summary-label">Subtotal</div>
+        <div>₦{{ transaction.orderitem_set.all|length|mul:transaction.amount|sub:transaction.address.shipping_fee }}</div>
+      </div>
+      <div class="summary-row">
+        <div class="summary-label">Shipping</div>
+        <div>₦{{ transaction.address.shipping_fee }}</div>
+      </div>
+      <div class="summary-row">
+        <div class="summary-label">Tax</div>
+        <div>₦0</div>
+      </div>
+      <div class="summary-row total">
+        <div>Total</div>
+        <div>₦{{ transaction.amount }}</div>
+      </div>
+      <a href="{% url 'shop' %}" class="btn btn-accent mt-3">Continue Shopping</a>
+    </div>
+  </section>
+
+  <!-- ====== FOOTER ====== -->
+  <footer class="section pt-5 pb-4">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="footer-brand h4">SOFT BOY <span class="text-white-50">CROWN</span></div>
+          <p class="text-white-50 small">Timeless street with soft energy. Lagos-born, globally worn.</p>
+          <div class="d-flex gap-3 mt-2">
+            <a href="https://www.instagram.com/soft_boycrown7?igsh=MWgzaGVudXJnajBnNQ==" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="https://vm.tiktok.com/ZSHWjUvFVPTYy-C0RBu/" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="eyebrow mb-2">Quick Links</div>
+          <ul class="list-unstyled text-white-50 small m-0">
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'lookbook' %}">Lookbook</a></li>
+            <li><a href="{% url 'our_story' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <div class="eyebrow mb-2">Help</div>
+          <ul class="list-unstyled text-white-50 small m-0">
+            <li><a href="#">Returns & Exchange</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <div class="eyebrow mb-2">Legal</div>
+          <ul class="list-unstyled text-white-50 small m-0">
+            <li><a href="#">Terms & Conditions</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="text-white-50 small mt-4">© <span id="y"></span> Soft Boy Crown. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true, duration: 800, easing: "ease-out-cubic" });
+
+    // Sticky nav shadow on scroll
+    const nav = document.querySelector('.navbar');
+    const onScroll = () => {
+      if (window.scrollY > 12) { nav.style.boxShadow = '0 10px 30px -20px rgba(0,0,0,.8)'; }
+      else { nav.style.boxShadow = 'none'; }
+    };
+    document.addEventListener('scroll', onScroll);
+
+    // Year
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SOFT BOY CROWN — Your Cart</title>
+  <meta name="description" content="Soft Boy Crown — Review your cart and checkout. Wear softness, crown comfort." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&family=Bebas+Neue&family=Gloock&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0b0b0b;
+      --card: #121212;
+      --ink: #ffffff;
+      --dim: #9ca3af;
+      --accent: #18ff8b;
+      --accent-2: #ff3b3b;
+      --brand: #d1ffec;
+      --glass: rgba(255,255,255,.06);
+      --radius: 1.25rem;
+    }
+    html, body { background: var(--bg); color: var(--ink); font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+    a { color: inherit; text-decoration: none; }
+    .nav-blur { backdrop-filter: saturate(180%) blur(10px); background: linear-gradient(180deg, rgba(0,0,0,.75), rgba(0,0,0,.35)); border-bottom: 1px solid rgba(255,255,255,.08); }
+    .navbar-brand { font-family: "Bebas Neue", system-ui; letter-spacing: .08em; font-size: 1.85rem; }
+    .brand-script { font-family: "Great Vibes", cursive; font-size: 1.2rem; color: var(--brand); }
+    .nav-cta { border: 1px solid var(--accent); color: #0b0b0b; background: linear-gradient(135deg, var(--accent), #9bffca); border-radius: 999px; padding: .55rem 1rem; font-weight: 700; }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px -10px var(--accent); }
+    .cart-icon { position: relative; display: inline-flex; align-items: center; color: var(--ink); }
+    .cart-count { position: absolute; top: -8px; right: -8px; background: var(--accent); color: #0b0b0b; font-size: 0.7rem; font-weight: 700; min-width: 18px; height: 18px; border-radius: 999px; display: flex; align-items: center; justify-content: center; }
+    .cart-header { padding: clamp(6rem, 10vw, 10rem) 0 clamp(3rem, 5vw, 5rem); background: linear-gradient(180deg, rgba(24,255,139,.08), transparent 80%); }
+    .eyebrow { letter-spacing: .12em; text-transform: uppercase; color: var(--dim); font-size: .8rem; }
+    .heading { font-family: "Gloock"; font-size: clamp(1.8rem, 4vw, 3rem); }
+    .section { padding: clamp(3rem, 6vw, 6rem) 0; }
+    .cart-item { background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); overflow: hidden; position: relative; margin-bottom: 1.5rem; }
+    .cart-item-img { width: 100px; height: 100px; object-fit: cover; border-radius: .5rem; }
+    .cart-item-title { font-weight: 600; }
+    .cart-item-price { font-weight: 800; }
+    .cart-item-meta { color: var(--dim); font-size: .9rem; }
+    .cart-item-remove { color: var(--dim); background: transparent; border: none; transition: all .2s; }
+    .cart-item-remove:hover { color: var(--accent-2); }
+    .qty { width: 110px; }
+    .qty .form-control { color: var(--ink); background: var(--card); border: 1px solid rgba(255,255,255,.08); }
+    .qty .btn { background: var(--card); border: 1px solid rgba(255,255,255,.08); color: var(--ink); }
+    .cart-summary { background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding: 1.5rem; }
+    .summary-row { display: flex; justify-content: space-between; margin-bottom: .75rem; }
+    .summary-row.total { border-top: 1px solid rgba(255,255,255,.08); padding-top: 1rem; margin-top: 1rem; font-weight: 700; font-size: 1.1rem; }
+    .summary-label { color: var(--dim); }
+    .btn-accent { background: var(--accent); color: #0b0b0b; }
+    .btn-ghost { border: 1px solid rgba(255,255,255,.2); background: transparent; color: #fff; }
+    .btn-ghost:hover { background: #111; }
+    .checkout-btn { background: var(--accent); color: #0b0b0b; border-radius: 999px; padding: .8rem 1.2rem; font-weight: 800; border: none; transition: transform .2s; width: 100%; }
+    .checkout-btn:hover { transform: translateY(-2px); }
+    .continue-btn { color: var(--dim); text-align: center; display: block; margin-top: 1rem; }
+    .continue-btn:hover { color: var(--ink); }
+    .empty-cart { text-align: center; padding: 3rem 0; }
+    .empty-cart-icon { font-size: 4rem; color: var(--dim); margin-bottom: 1rem; }
+    footer { border-top: 1px solid rgba(255,255,255,.08); }
+    .footer-brand { font-family: "Bebas Neue"; }
+    .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent); }
+    /* Toast Notification */
+    .toast { background: var(--card); border: 1px solid var(--glass); color: var(--ink); border-radius: var(--radius); }
+    .toast-success { border-left: 4px solid var(--accent); }
+    .toast-error { border-left: 4px solid var(--accent-2); }
+    .toast .btn-close { filter: invert(1); }
+  </style>
+</head>
+<body>
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="position-fixed top-0 end-0 p-3" style="z-index: 1050;"></div>
+
+  <!-- ====== NAVBAR ====== -->
+  <nav class="navbar navbar-expand-lg fixed-top nav-blur">
+    <div class="container py-2">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'home' %}">
+        <span class="fs-3">SB</span>
+        <span class="brand-script">Crown</span>
+      </a>
+      <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon d-inline-flex align-items-center justify-content-center" style="filter:invert(1)"><i class="bi bi-list fs-1"></i></span>
+      </button>
+      <div id="nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-4">
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'shop' %}">Shop</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'lookbook' %}">Lookbook</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'our_story' %}">About</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="{% url 'contact' %}">Contact</a></li>
+          <li class="nav-item"><a class="nav-link cart-icon" href="{% url 'cart' %}"><i class="bi bi-cart3 fs-5"></i><span class="cart-count">{{ cart_count }}</span></a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="{% url 'profile' %}"><i class="bi bi-person-circle fs-5"></i></a></li>
+          <li class="nav-item ms-lg-2"><a class="btn nav-cta" href="{% url 'shop' %}">Shop Now</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ====== CART HEADER ====== -->
+  <header class="cart-header">
+    <div class="container text-center">
+      <div class="eyebrow">Soft Boy Crown</div>
+      <h1 class="heading mb-3">Your Cart</h1>
+      <p class="text-white-50 mx-auto" style="max-width:600px">Review your items and proceed to checkout when you're ready.</p>
+    </div>
+  </header>
+
+  <!-- ====== CART CONTENT ====== -->
+  <section class="container py-5" id="cartContent">
+    {% if messages %}
+    <div class="container mt-3">
+      {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'success' %}success{% else %}danger{% endif %} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="row g-4 {% if not cart_items %}d-none{% endif %}">
+      <!-- Cart Items -->
+      <div class="col-lg-8">
+        <h2 class="h4 mb-4">Cart Items ({{ cart_items|length }})</h2>
+        {% for item in cart_items %}
+        <div class="cart-item p-3" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:1|add:"00" }}" data-item-id="{{ item.id }}">
+          <div class="row align-items-center">
+            <div class="col-md-2 col-4 mb-3 mb-md-0">
+              {% if item.product.images.first %}
+                <img src="{{ item.product.images.first.image.url }}" alt="{{ item.product.name }}" class="cart-item-img">
+              {% else %}
+                <img src="{% static 'images/placeholder.jpg' %}" alt="{{ item.product.name }} - No image" class="cart-item-img">
+              {% endif %}
+            </div>
+            <div class="col-md-6 col-8 mb-3 mb-md-0">
+              <h3 class="cart-item-title h5">{{ item.product.name }}</h3>
+              <div class="cart-item-meta">
+                {% if item.size %}Size: {{ item.size.name }}{% else %}No size{% endif %}
+                {% if item.color %} • Color: {{ item.color.name }}{% endif %}
+              </div>
+              <div class="cart-item-price mt-1">₦{{ item.total_price }}</div>
+            </div>
+            <div class="col-md-3 col-8">
+              <div class="input-group qty">
+               
+                <input type="number" class="form-control text-center" value="{{ item.quantity }}" min="1" max="{{ item.product.in_stock }}" data-item-id="{{ item.id }}">
+              
+              </div>
+            </div>
+            <div class="col-md-1 col-4 text-end">
+              <button class="cart-item-remove" aria-label="Remove item" data-item-id="{{ item.id }}">
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <!-- Handled by empty-cart below -->
+        {% endfor %}
+      </div>
+
+      <!-- Cart Summary -->
+      <div class="col-lg-4">
+        <div class="cart-summary" data-aos="fade-left">
+          <h2 class="h4 mb-4">Order Summary</h2>
+          <div class="summary-row">
+            <div class="summary-label">Subtotal</div>
+            <div class="summary-value" id="subtotal">₦{{ subtotal }}</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-label">Shipping</div>
+            <div class="summary-value" id="shipping_fee">₦{{ shipping_fee }}</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-label">Tax</div>
+            <div class="summary-value">₦0</div>
+          </div>
+          <div class="summary-row total">
+            <div>Total</div>
+            <div id="total_price">₦{{ total_price }}</div>
+          </div>
+          <a href="{% url 'checkout' %}" class="checkout-btn mt-3">Proceed to Checkout</a>
+          <a href="{% url 'shop' %}" class="continue-btn">Continue Shopping</a>
+        </div>
+        <!-- Promo Code (Placeholder for future implementation) -->
+        <div class="mt-4 p-3" style="background:var(--glass); border-radius:var(--radius);" data-aos="fade-up">
+          <h3 class="h5 mb-3">Promo Code</h3>
+          <div class="input-group">
+            <input type="text" class="form-control bg-dark border-0 text-white" placeholder="Enter code">
+            <button class="btn btn-accent" disabled>Apply</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty Cart State -->
+    <div class="empty-cart {% if cart_items %}d-none{% endif %}">
+      <div class="empty-cart-icon">
+        <i class="bi bi-cart-x"></i>
+      </div>
+      <h2 class="h3 mb-3">Your cart is empty</h2>
+      <p class="text-white-50 mb-4">Looks like you haven't added any items to your cart yet.</p>
+      <a href="{% url 'shop' %}" class="btn btn-accent btn-lg">Start Shopping</a>
+    </div>
+  </section>
+
+  <!-- ====== FOOTER ====== -->
+  <footer class="section pt-5 pb-4">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="footer-brand h4">SOFT BOY <span class="text-white-50">CROWN</span></div>
+          <p class="text-white-50 small">Timeless street with soft energy. Lagos-born, globally worn.</p>
+          <div class="d-flex gap-3 mt-2">
+            <a href="https://www.instagram.com/soft_boycrown7?igsh=MWgzaGVudXJnajBnNQ==" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="https://vm.tiktok.com/ZSHWjUvFVPTYy-C0RBu/" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="eyebrow mb-2">Quick Links</div>
+          <ul class="list-unstyled text-white-50 small m-0">
+            <li><a href="{% url 'shop' %}">Shop</a></li>
+            <li><a href="{% url 'lookbook' %}">Lookbook</a></li>
+            <li><a href="{% url 'our_story' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <div class="eyebrow mb-2">Help</div>
+          <ul class="list-unstyled text-white-50 small m-0">
+            <li><a href="#">Returns & Exchange</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <div class="eyebrow mb-2">Legal</div>
+          <ul class="list-unstyled text-white-50 small m-0">
+            <li><a href="#">Terms & Conditions</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="text-white-50 small mt-4">© <span id="y"></span> Soft Boy Crown. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true, duration: 800, easing: "ease-out-cubic" });
+
+    // Sticky nav shadow on scroll
+    const nav = document.querySelector('.navbar');
+    const onScroll = () => {
+      if (window.scrollY > 12) { nav.style.boxShadow = '0 10px 30px -20px rgba(0,0,0,.8)'; }
+      else { nav.style.boxShadow = 'none'; }
+    };
+    document.addEventListener('scroll', onScroll);
+
+    // Function to get CSRF token from cookie
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    // Function to show toast notification
+    function showToast(message, type = 'success') {
+      const toastContainer = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast align-items-center text-bg-dark toast-${type} mb-2`;
+      toast.setAttribute('role', 'alert');
+      toast.setAttribute('aria-live', 'assertive');
+      toast.setAttribute('aria-atomic', 'true');
+      toast.innerHTML = `
+        <div class="d-flex">
+          <div class="toast-body">${message}</div>
+          <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      `;
+      toastContainer.appendChild(toast);
+      const bsToast = new bootstrap.Toast(toast);
+      bsToast.show();
+      setTimeout(() => bsToast.hide(), 5000);
+    }
+
+    // Format currency
+    function formatCurrency(amount) {
+      return `₦${Number(amount).toLocaleString('en-NG', { minimumFractionDigits: 0 })}`;
+    }
+
+    // Update cart totals
+    function updateCartTotals(data) {
+      document.getElementById('subtotal').textContent = formatCurrency(data.subtotal);
+      document.getElementById('shipping_fee').textContent = formatCurrency(data.shipping_fee);
+      document.getElementById('total_price').textContent = formatCurrency(data.total_price);
+      document.querySelector('.cart-count').textContent = Math.min(999, data.cart_count);
+      document.querySelector('h2.h4').textContent = `Cart Items (${document.querySelectorAll('.cart-item').length})`;
+    }
+
+    // Check if cart is empty
+    function checkEmptyCart() {
+      const cartItems = document.querySelectorAll('.cart-item').length;
+      const cartContent = document.querySelector('.row.g-4');
+      const emptyCart = document.querySelector('.empty-cart');
+      if (cartItems === 0) {
+        cartContent.classList.add('d-none');
+        emptyCart.classList.remove('d-none');
+      } else {
+        cartContent.classList.remove('d-none');
+        emptyCart.classList.add('d-none');
+      }
+    }
+
+    // Handle quantity button clicks
+    document.querySelectorAll('.qty-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const input = btn.parentElement.querySelector('input');
+        const itemId = input.dataset.itemId;
+        const currentValue = parseInt(input.value);
+        const action = btn.dataset.action;
+        let newValue = currentValue;
+
+        if (action === 'increase' && currentValue < parseInt(input.max)) {
+          newValue = currentValue + 1;
+        } else if (action === 'decrease' && currentValue > parseInt(input.min)) {
+          newValue = currentValue - 1;
+        }
+
+        if (newValue !== currentValue) {
+          input.value = newValue;
+          await updateCartItem(itemId, newValue);
+        }
+      });
+    });
+
+    // Handle quantity input changes
+    document.querySelectorAll('.qty input').forEach(input => {
+      input.addEventListener('change', async () => {
+        const itemId = input.dataset.itemId;
+        const min = parseInt(input.min);
+        const max = parseInt(input.max);
+        let value = parseInt(input.value);
+
+        if (isNaN(value) || value < min) {
+          input.value = min;
+          value = min;
+        } else if (value > max) {
+          input.value = max;
+          value = max;
+        }
+
+        await updateCartItem(itemId, value);
+      });
+    });
+
+    // Update cart item via AJAX
+    async function updateCartItem(itemId, quantity) {
+      try {
+        const response = await fetch(`/update-cart-item/${itemId}/`, {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: `quantity=${quantity}`
+        });
+        const data = await response.json();
+        if (response.ok && data.status === 'success') {
+          showToast(data.message, 'success');
+          updateCartTotals(data);
+        } else {
+          showToast(data.message || 'Failed to update cart item.', 'error');
+        }
+      } catch (error) {
+        showToast('Failed to update cart item. Please try again.', 'error');
+        console.error('Error:', error);
+      }
+    }
+
+    // Remove items from cart
+    document.querySelectorAll('.cart-item-remove').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const itemId = btn.dataset.itemId;
+        const cartItem = btn.closest('.cart-item');
+        cartItem.style.opacity = '0';
+        try {
+          const response = await fetch(`/remove-from-cart/${itemId}/`, {
+            method: 'POST',
+            headers: {
+              'X-CSRFToken': getCookie('csrftoken'),
+              'X-Requested-With': 'XMLHttpRequest'
+            }
+          });
+          const data = await response.json();
+          if (response.ok && data.status === 'success') {
+            showToast(data.message, 'success');
+            setTimeout(() => {
+              cartItem.remove();
+              updateCartTotals(data);
+              checkEmptyCart();
+            }, 300);
+          } else {
+            cartItem.style.opacity = '1';
+            showToast(data.message || 'Failed to remove item.', 'error');
+          }
+        } catch (error) {
+          cartItem.style.opacity = '1';
+          showToast('Failed to remove item. Please try again.', 'error');
+          console.error('Error:', error);
+        }
+      });
+    });
+
+    // Year
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
