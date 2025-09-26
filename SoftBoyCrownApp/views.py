@@ -1268,3 +1268,15 @@ def contact(request):
         'categories': categories,
     }
     return render(request, 'SoftBoyCrownApp/contact.html', context)
+
+
+@login_required
+def order_detail(request, order_id):
+    order = get_object_or_404(Transaction, id=order_id, user=request.user)
+    cart_count = request.user.cart.items.count() if request.user.cart else 0
+    context = {
+        'order': order,
+        'cart_count': cart_count,
+        'current_year': 2025,  # Adjust dynamically if needed
+    }
+    return render(request, 'SoftBoyCrownApp/order_detail.html', context)
